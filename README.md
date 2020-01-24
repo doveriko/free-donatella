@@ -51,7 +51,7 @@ Typography, layout, components.
 #### function Game():
 - this.canvas: Will call the canvas
 - this.ctx: Will set the canvas as "2d" (2 dimensions)
-- this.pollution -> Empty array that will "push" random rubbish into the canvas. Various images will be used and all of them substract 1 life from the player (turtle).
+- this.rubbish -> Empty array that will "push" random rubbish into the canvas. Various images will be used and all of them substract 1 life from the player (turtle).
 - this.food -> Empty array that will "push" random food into the canvas. Various images will be used, and every type of food will have a different value (in points).
 - this.gameIsOver: Will check if game is over.
 - this.gameScreen: Will check the screen to display.
@@ -59,7 +59,7 @@ Typography, layout, components.
 
 #### Game.prototype.(...):
 - start: Initialize the game and canvas, generate a new player and add keydown event listeners
-- startLoop: Update the score, generate random enemies (pollution) and random food, check collisions between the turtle and enemies & food, check collisions of turtle with the frame of the screen and check if enemies (pollution) and food are out of the screen (to remove them from the array), draw the elements (turtle, rubbish and food), terminate the loop if the game is over.
+- startLoop: Update the score, generate random enemies (rubbish) and random food, check collisions between the turtle and enemies & food, check collisions of turtle with the frame of the screen and check if enemies (rubbish) and food are out of the screen (to remove them from the array), draw the elements (turtle, rubbish and food), terminate the loop if the game is over.
 - gameOver: Check if game is over and starts again.
 - checkCollisions: Activa la función 'gameOver' cuando la vidas llegan a 0.
 - passGameOverCallback: Callback function to restart the game from startGame() in main.js.
@@ -74,16 +74,16 @@ Typography, layout, components.
 - Turtle.prototype.draw
 
 ### food.js
-- function Turtle: canvas, ctx, size, x, y, speed
-- Turtle.prototype.draw:
-- Turtle.prototype.updatePosition
-- Turtle.prototype.isInsideScreen
+- function Food: canvas, ctx, size, x, y, speed
+- Food.prototype.draw:
+- Food.prototype.updatePosition
+- Food.prototype.isInsideScreen
 
-### pollution.js
-- function Turtle: canvas, ctx, size, x, y, speed
-- Turtle.prototype.draw
-- Turtle.prototype.updatePosition
-- Turtle.prototype.isInsideScreen
+### rubbish.js
+- function Rubbish: canvas, ctx, size, x, y, speed
+- Rubbish.prototype.draw
+- Rubbish.prototype.updatePosition
+- Rubbish.prototype.isInsideScreen
 
 ## States y States Transitions
 - splashScreen: Title, mission, movement instructions and start button.
