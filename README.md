@@ -6,16 +6,32 @@ This is a game to raise awareness about the threat that pollution represents for
 
 ## MVP (DOM - CANVAS)
 
-
-
 ## Backlog
-
+Done in paper
 
 ## Data structure
 
 ### index.html
+```<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Canvas Code Along</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <script src="./src/main.js"></script>
+  <script src="./src/game.js"></script>
+  <script src="./src/player.js"></script>
+  <script src="./src/enemy.js"></script>
+</body>
+</html>
+```
 
 ### style.css
+HTML, body
 
 ### main.js
 
@@ -45,42 +61,49 @@ This is a game to raise awareness about the threat that pollution represents for
 - start: Initialize the game and canvas, generate a new player and add keydown event listeners
 - startLoop: Update the score, generate random enemies (pollution) and random food, check collisions between the turtle and enemies & food, check collisions of turtle with the frame of the screen and check if enemies (pollution) and food are out of the screen (to remove them from the array), draw the elements (turtle, rubbish and food), terminate the loop if the game is over.
 - gameOver: Check if game is over and starts again.
-- checkCollisions
-- passGameOverCallback
+- checkCollisions: Activa la función 'gameOver' cuando la vidas llegan a 0.
+- passGameOverCallback: Callback function to restart the game from startGame() in main.js.
 
 ### turtle.js
-function buildDom(htmlString)
+- function Turtle: canvas, ctx, size, x, y, direction, speed
+- Turtle.prototype.setDirection: Only left and right
+- Player.prototype.didCollide: With rubbish & and food
+- Turtle.prototype.updatePosition
+- Turtle.prototype.handleScreenCollision
+- Turtle.prototype.removeLife
+- Turtle.prototype.draw
 
 ### food.js
-function buildDom(htmlString)
+- function Turtle: canvas, ctx, size, x, y, speed
+- Turtle.prototype.draw:
+- Turtle.prototype.updatePosition
+- Turtle.prototype.isInsideScreen
 
 ### pollution.js
-function Pollution () // Define its random appearence in canvas
-Pollution.prototype.draw = function() //
+- function Turtle: canvas, ctx, size, x, y, speed
+- Turtle.prototype.draw
+- Turtle.prototype.updatePosition
+- Turtle.prototype.isInsideScreen
 
 ## States y States Transitions
-Definition of the different states and their transition (transition functions)
+- splashScreen: Title, mission, movement instructions and start button.
+- gameScreen: Scoreboard with number of lives and points, enemies (rubbish) amount increases until it is impossible for the turtle to avoid collision and looses the 3 lives.
+- gameoverScreen: Shows a message with environmental awareness content and 2 buttons: one to play again (back to splashScreen) and another button with a "call to action" that includes a link to some website about the topic (e.g. https://www.worldwildlife.org/species/sea-turtle)
 
-- splashScreen
-- gameScreen
-- gameoverScreen
-- winScreen
-
-
-## Task
-Task definition in order of priority
-
+## Tasks
+- Create proyect and HTML, CSS and JS files and link them.
+- Inspect the HTML elements and style them in CSS.
+- Create loop in JS.
+- Shape the properties of turtle, rubbish and food.
+- Implement the structure of main.js and game.js.
 
 ## Links
-
 
 ### Trello
 [Link url](https://trello.com)
 
-
 ### Git
-URls for the project repo and deploy
-[Link Repo](http://github.com)
+[Link Repo](https://github.com/doveriko/free-donatella)
 [Link Deploy](http://github.com)
 
 
