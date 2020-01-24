@@ -31,7 +31,7 @@ Done in paper
 ```
 
 ### style.css
-HTML, body
+Typography, layout, components.
 
 ### main.js
 
