@@ -93,20 +93,19 @@ Typography, layout, components.
 ## Tasks
 - Create proyect and HTML, CSS and JS files and link them.
 - Inspect the HTML elements and style them in CSS.
-- Create loop in JS.
+- Create loop in JS to iteration between screens (splash, game and game over).
 - Shape the properties of turtle, rubbish and food.
 - Implement the structure of main.js and game.js.
 
 ## Links
 
 ### Trello
-[Link url](https://trello.com)
+[Link url](https://trello.com/b/XiuTiErU)
 
 ### Git
 [Link Repo](https://github.com/doveriko/free-donatella)
-[Link Deploy](http://github.com)
+(Deploy)
 
 
 ### Slides
-URls for the project presentation (slides)
-[Link Slides.com](http://slides.com)
+(Slides)
