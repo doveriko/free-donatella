@@ -7,7 +7,13 @@ This is a game to raise awareness about the threat that pollution represents for
 ## MVP (DOM - CANVAS)
 
 ## Backlog
-Done in paper
+Increase speed of enemies and food when the turtle interacts with them.
+Add an animation everytime the turtle interacts with some element: one type for the rubbish and another one for the food.
+Add music and sound effect.
+Add different types of enemies (rubbish) that can substract more than 1 life.
+Add different types of food that can give a different amount of points.
+Set the possibility to "win" if the turtle manages to reach a finish lane.
+Show random messages in the game over screen instead of just one.
 
 ## Data structure
 
@@ -18,14 +24,15 @@ Done in paper
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Canvas Code Along</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <title>Free Donatella</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <script src="./src/main.js"></script>
   <script src="./src/game.js"></script>
-  <script src="./src/player.js"></script>
-  <script src="./src/enemy.js"></script>
+  <script src="./src/rubbish.js"></script>
+  <script src="./src/rubbish.js"></script>
+  <script src="./src/food.js"></script>
 </body>
 </html>
 ```
