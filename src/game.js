@@ -3,8 +3,10 @@
 function Game() {
   this.canvas = null;
   this.ctx = null;
-  this.rubbish = [];
+  this.enemy = [];
   this.food = [];
+  this.superfood = [];
+  this.superenemy = [];
   this.turtle = null;
   this.gameIsOver = false;
   this.gameScreen = null;
@@ -67,11 +69,23 @@ Game.prototype.start = function() {
       if (Math.random() > 0.98) {
         var randomX1 = this.canvas.width * Math.random();
         var randomX2 = this.canvas.width * Math.random();
-        var newRubbish = new Enemy(this.canvas, randomX1, 6);
+  
+        var newEnemy = new Enemy(this.canvas, randomX1, 6);
         var newFood = new Food(this.canvas, randomX2, 5);
 
-        this.rubbish.push(newRubbish);
+        this.enemy.push(newEnemy);
         this.food.push(newFood);
+      }
+
+      if (Math.random() > 0.99) {
+        var randomX3 = this.canvas.width * Math.random();
+        var randomX4 = this.canvas.width * Math.random();
+        
+        var newSuperfood = new Superfood(this.canvas, randomX3, 7);
+        var newSuperenemy = new Superenemy(this.canvas, randomX4, 7);
+
+        this.superfood.push(newSuperfood);
+        this.superenemy.push(newSuperenemy);
       }
   
       // 2. Check if the turtle had collisions with rubbish (check all of the rubbish)
@@ -84,7 +98,7 @@ Game.prototype.start = function() {
       // 5. Check if the rubbish our out of the screen
       // [x, x, x ,x ]
   
-      this.rubbish = this.rubbish.filter(function(enemy) {
+      this.enemy = this.enemy.filter(function(enemy) {
         enemy.updatePosition(); // 4
         return enemy.isInsideScreen(); // 5
       });
@@ -92,6 +106,16 @@ Game.prototype.start = function() {
       this.food = this.food.filter(function(food) {
         food.updatePosition(); // 4
         return food.isInsideScreen(); // 5
+      });
+
+      this.superfood = this.superfood.filter(function(superfood) {
+        superfood.updatePosition(); // 4
+        return superfood.isInsideScreen(); // 5
+      });
+
+      this.superenemy = this.superenemy.filter(function(superenemy) {
+        superenemy.updatePosition(); // 4
+        return superenemy.isInsideScreen(); // 5
       });
   
       // 2. CLEAR THE CANVAS
@@ -102,12 +126,20 @@ Game.prototype.start = function() {
       this.turtle.draw();
   
       // 2. Draw all of the rubbish
-      this.rubbish.forEach(function(enemy) {
+      this.enemy.forEach(function(enemy) {
         enemy.draw();
       });
 
       this.food.forEach(function(food) {
         food.draw();
+      });
+
+      this.superfood.forEach(function(superfood) {
+        superfood.draw();
+      });
+
+      this.superenemy.forEach(function(superenemy) {
+        superenemy.draw();
       });
   
       // 4. TERMINATE THE LOOP IF THE GAME IS OVER
@@ -133,7 +165,7 @@ Game.prototype.start = function() {
 
 Game.prototype.checkCollisions = function() {
   
-    this.rubbish.forEach( function(enemy) {
+    this.enemy.forEach( function(enemy) {
       
       // We will implement didCollide() in the next step
       if ( this.turtle.didCollide(enemy) ) {
@@ -149,6 +181,25 @@ Game.prototype.checkCollisions = function() {
         }
       }
     }, this);
+
+    this.superenemy.forEach( function(superenemy) {
+      
+      // We will implement didCollide() in the next step
+      if ( this.turtle.didCollide(superenemy) ) {
+  
+        this.turtle.removeLife();
+        console.log('lives', this.turtle.lives);
+        
+        // Move the enemy off screen to the left
+        superenemy.y = 0 - superenemy.size;
+  
+        if (this.turtle.lives === 0) {
+          this.gameOver(this.score);
+        }
+      }
+    }, this);
+
+
     // We have to pass `this` value as the second argument
     // as array method callbacks have a default `this` of undefined.
     this.food.forEach( function(food) {
@@ -159,6 +210,17 @@ Game.prototype.checkCollisions = function() {
         // Move the food off screen to the left
         food.y = 0 - food.size;
         this.score += 100;
+      }
+    }, this);
+
+    this.superfood.forEach( function(superfood) {
+      
+      // We will implement didCollide() in the next step
+      if ( this.turtle.didCollide(superfood) ) {
+        
+        // Move the superfood off screen to the left
+        superfood.y = 0 - superfood.size;
+        this.score += 150;
       }
     }, this);
 

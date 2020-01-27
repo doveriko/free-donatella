@@ -77,6 +77,7 @@ function main() {
         <h1>Game over</h1>
         <p>Your score: <span></span></p>
         <button>Restart</button>
+        <button>Call to action</button>
         </main>
     `);
   
@@ -117,7 +118,7 @@ function main() {
     */
   }
 
-  function gameOver() { // score as an argument??
+  function gameOver() { // score as an argument?
     removeGameScreen();
     createGameOverScreen(); // <--(score) ??
 
