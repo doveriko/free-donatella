@@ -51,6 +51,7 @@ Game.prototype.start = function() {
     this.startLoop();
   };
 
+
   Game.prototype.startLoop = function() {
     var loop = function() {
       // 1. UPDATE THE STATE (game, turtle, enemy)
@@ -59,13 +60,15 @@ Game.prototype.start = function() {
   
       // 1. Create rubbish randomly
   
-      this.score++;
+      //this.score++;
       this.scoreElement.innerHTML = this.score;
+      this.livesElement.innerHTML = this.turtle.lives;
   
       if (Math.random() > 0.98) {
-        var randomX = this.canvas.width * Math.random();
-        var newRubbish = new Rubbish(this.canvas, randomX, 6);
-        var newFood = new Food(this.canvas, randomX, 5);
+        var randomX1 = this.canvas.width * Math.random();
+        var randomX2 = this.canvas.width * Math.random();
+        var newRubbish = new Enemy(this.canvas, randomX1, 6);
+        var newFood = new Food(this.canvas, randomX2, 5);
 
         this.rubbish.push(newRubbish);
         this.food.push(newFood);
@@ -85,6 +88,11 @@ Game.prototype.start = function() {
         enemy.updatePosition(); // 4
         return enemy.isInsideScreen(); // 5
       });
+
+      this.food = this.food.filter(function(food) {
+        food.updatePosition(); // 4
+        return food.isInsideScreen(); // 5
+      });
   
       // 2. CLEAR THE CANVAS
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -97,6 +105,10 @@ Game.prototype.start = function() {
       this.rubbish.forEach(function(enemy) {
         enemy.draw();
       });
+
+      this.food.forEach(function(food) {
+        food.draw();
+      });
   
       // 4. TERMINATE THE LOOP IF THE GAME IS OVER
       if (!this.gameIsOver) {
@@ -108,6 +120,10 @@ Game.prototype.start = function() {
     // Alternative: windows.requestAnimationFrame(loop);
     loop();
   };
+
+  Game.prototype.getScore = function() {
+    return this.score;
+  }
 
   Game.prototype.gameOver = function() {
     this.gameIsOver = true;
@@ -129,12 +145,23 @@ Game.prototype.checkCollisions = function() {
         enemy.y = 0 - enemy.size;
   
         if (this.turtle.lives === 0) {
-          this.gameOver();
+          this.gameOver(this.score);
         }
       }
     }, this);
     // We have to pass `this` value as the second argument
     // as array method callbacks have a default `this` of undefined.
+    this.food.forEach( function(food) {
+      
+      // We will implement didCollide() in the next step
+      if ( this.turtle.didCollide(food) ) {
+        
+        // Move the food off screen to the left
+        food.y = 0 - food.size;
+        this.score += 100;
+      }
+    }, this);
+
   };
   
 

@@ -68,15 +68,10 @@ function main() {
   function removeGameScreen() {
     game.gameScreen.remove(); // We will implement it in the game object
   }
-  /* Alternative method:
-  function removeGameScreen() {
-    game.removeGameScreen();
-  }
-  */
     
   // -- game over screen
 
-  function createGameOverScreen(score) {
+  function createGameOverScreen() {
     gameOverScreen = buildDom(`
       <main>
         <h1>Game over</h1>
@@ -89,7 +84,7 @@ function main() {
     button.addEventListener('click', startGame);
   
     var span = gameOverScreen.querySelector('span');
-    span.innerText = score;
+    span.innerText = game.getScore();
   
     document.body.appendChild(gameOverScreen);
   }

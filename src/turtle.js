@@ -6,16 +6,16 @@ function Turtle(canvas, lives) {
   this.lives = lives;
   this.size = 100;
   this.x = canvas.width / 2;
-  this.y = 200;
+  this.y = 600;
   this.direction = 0;
-  this.speed = 5;
+  this.speed = 2;
 }
 
 Turtle.prototype.setDirection = function(direction) {
     // +1 down  -1 up
     if (direction === "left") this.direction = -1;
     else if (direction === "right") this.direction = 1;
-    else if (direction === "stop") this.direction = 0;
+    //else if (direction === "stop") this.direction = 0;
   };
 
   Turtle.prototype.didCollide = function(enemy) {
@@ -44,8 +44,36 @@ Turtle.prototype.setDirection = function(direction) {
     return false;
   };
 
+  Turtle.prototype.didCollide = function(food) {
+    var playerLeft = this.x;
+    var playerRight = this.x + this.size;
+    var playerTop = this.y;
+    var playerBottom = this.y + this.size;
+  
+    var foodLeft = food.x;
+    var foodRight = food.x + food.size;
+    var foodTop = food.y;
+    var foodBottom = food.y + food.size;
+  
+    // Check if the food intersects any of the player's sides
+    var crossLeft = foodLeft <= playerRight && foodLeft >= playerLeft;
+      
+    var crossRight = foodRight >= playerLeft && foodRight <= playerRight;
+    
+    var crossBottom = foodBottom >= playerTop && foodBottom <= playerBottom;
+    
+    var crossTop = foodTop <= playerBottom && foodTop >= playerTop;
+  
+    if ((crossLeft || crossRight) && (crossTop || crossBottom)) {
+      return true;
+    }
+    return false;
+  };
+
 Turtle.prototype.handleScreenCollision = function() {
-    this.updatePosition();
+    //this.updatePosition();
+    this.x = this.x + this.direction * this.speed;
+
   
     var screenLeft = 0;
     var screenRight = this.canvas.width;
@@ -59,7 +87,7 @@ Turtle.prototype.handleScreenCollision = function() {
 };
 
 Turtle.prototype.draw = function() {
-    this.ctx.fillStyle = "lightblue";
+    this.ctx.fillStyle = "green";
   
     // fillRect(x, y, width, height)
     this.ctx.fillRect(this.x, this.y, this.size, this.size);
