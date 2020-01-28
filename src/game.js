@@ -29,12 +29,12 @@ Game.prototype.start = function() {
     // Set the canvas dimensions to match the parent
     this.containerWidth = this.canvasContainer.offsetWidth;
     this.containerHeight = this.canvasContainer.offsetHeight;
-    this.canvas.setAttribute('width', this.containerWidth);
-    this.canvas.setAttribute('height', this.containerHeight);
+    this.canvas.setAttribute('width', this.containerWidth);// dimension canvas ancho
+    this.canvas.setAttribute('height', this.containerHeight); //dimension canvas alto
   
   
     // Create a new turtle for the current game
-    this.turtle = new Turtle(this.canvas, 3, 100);
+    this.turtle = new Turtle(this.canvas, 3000);
   
       // Add keydown event listeners
     this.handleKeyDown = function(event) {
@@ -66,7 +66,7 @@ Game.prototype.start = function() {
       this.scoreElement.innerHTML = this.score;
       this.livesElement.innerHTML = this.turtle.lives;
   
-      if (Math.random() > 0.98) {
+      if (Math.random() > 0.95) {
         var randomX1 = this.canvas.width * Math.random();
         var randomX2 = this.canvas.width * Math.random();
   

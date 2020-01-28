@@ -19,7 +19,8 @@ function main() {
   function createSplashScreen() {
     splashScreen = buildDom(`
     <main>
-      <h1>Free Donatella</h1>
+      <h1>FREE DONATELLA</h1>
+      <p class="prueba">Help our lovely turtle to survive another day in the ocean</p>
       <button>Start</button>
     </main>
   `);
@@ -47,11 +48,11 @@ function main() {
     <main class="game container">
       <header>
         <div class="lives">
-          <span class="label">Lives:</span>
+          <span class="label">LIVES:</span>
           <span class="value"></span>
         </div>
         <div class="score">
-          <span class="label">Score:</span>
+          <span class="label">SCORE:</span>
           <span class="value"></span>
         </div>
       </header>

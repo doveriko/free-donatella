@@ -6,7 +6,7 @@ function Turtle(canvas, lives) {
   this.lives = lives;
   this.size = 100;
   this.x = canvas.width / 2;
-  this.y = 600;
+  this.y = 500;
   this.direction = 0;
   this.speed = 2;
 }
@@ -87,8 +87,10 @@ Turtle.prototype.handleScreenCollision = function() {
 };
 
 Turtle.prototype.draw = function() {
-    this.ctx.fillStyle = "green";
-  
+    this.img = new Image(); 
+    this.img.src = "./img/turtle.png";
+    // this.ctx.fillStyle = "green";
+    this.ctx.drawImage(this.img, this.x, this.y, 120, 120);
     // fillRect(x, y, width, height)
-    this.ctx.fillRect(this.x, this.y, this.size, this.size);
+    // this.ctx.fillRect(this.x, this.y, this.size, this.size);
   };

@@ -1,48 +1,79 @@
-/* ---- CSS reset ---- */
+/* ---General features---- */
+
+@font-face {
+  font-family: 'turtlesregular';
+  src: url('fonts/turtles-webfont.woff2') format('woff2'),
+       url('fonts/turtles-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+    } 
 
 html {
     box-sizing: border-box;
-  }
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* ---- typography ---- */
-  
-  body {
-    color: #111;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 147%;
+    }
+
+html, body {
+    height: 100%;
+    }
+
+.container {
+        max-width: 72%;
+        max-height: 92%; /* Resizes the container to 728px for large screens */
+        margin: 0 auto;
+      }
+
+/* ---Splash screen---- */
+
+main {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-family: 'turtlesregular', sans-serif;
+  color: rgba(78, 0, 109, 0.9);
+  text-align: center;
+  font-size: 100px;
+  text-shadow: 2px 2px #995794;
+}
+
+main button {
+  background-color: darkblue;
+}
+
+.subtitle {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+  font-size: 200px;
+  color: rgba(78, 0, 109, 0.9);
+}
+
+/* Afecta a las 3 páginas */
+body {
+  background-image: url("./img/fondoguay.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  font-family: 'turtlesregular', sans-serif;
+  font-size: 16px;
   }
   
   p {
-    margin: 0;
-  }
-  
-  /* ---- layout ---- */
-  
-  html,
-  body {
-    height: 100%;
-  }
-  
-  .container {
-    margin: 0 20px;
-  }
-  
-  @media (min-width: 768px) {
-    .container {
-      max-width: 728px; /* Resizes the container to 728px for large screens */
-      margin: 0 auto;
-    }
+    margin: 20px 20px 20px 20px;
   }
   
   /* ---- components ---- */
@@ -55,11 +86,18 @@ html {
   }
   
   .game header {
-    height: 50px;
+    padding-top: 12px;
+    width: 500px;
     display: flex;
-    align-items: center;
+    align-content: space-around;
+    font-size: 18px;
+    color: rgb(12, 0, 122, 0.8);
   }
   
+  .prueba {
+    font-size: 20px;
+  }
+
   .game .lives {
     flex: 1;
   }
@@ -67,16 +105,16 @@ html {
   .game .score {
     flex: 1;
   }
-  
-  .game .label {
-    font-weight: bold;
+
+  canvas {
+    border: 1px solid red;
   }
   
-  .game .value {
-    font-style: italic;
-  }
-  
-  .game .canvas-container {
+  .canvas-container {
+    background-size: cover;
+    height: 100%;
     flex: 1;
+    width: 100%;
+    background-position: center;
   }
   
