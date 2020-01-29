@@ -34,7 +34,7 @@ Game.prototype.start = function() {
   
   
     // Create a new turtle for the current game
-    this.turtle = new Turtle(this.canvas, 3000);
+    this.turtle = new Turtle(this.canvas, 3);
   
       // Add keydown event listeners
     this.handleKeyDown = function(event) {
@@ -66,24 +66,25 @@ Game.prototype.start = function() {
       this.scoreElement.innerHTML = this.score;
       this.livesElement.innerHTML = this.turtle.lives;
   
-      if (Math.random() > 0.95) {
-        var randomX1 = this.canvas.width * Math.random();
-        var randomX2 = this.canvas.width * Math.random();
+      if (Math.random() > 0.98) {
+        var randomX1 = (this.canvas.width - 25) * Math.random();
+        var randomX2 = (this.canvas.width - 20) * Math.random();
   
-        var newEnemy = new Enemy(this.canvas, randomX1, 6);
-        var newFood = new Food(this.canvas, randomX2, 5);
+        var newEnemy = new Enemy(this.canvas, randomX1, 3);
+        var newFood = new Food(this.canvas, randomX2, 3);
 
         this.enemy.push(newEnemy);
         this.food.push(newFood);
       }
 
       if (Math.random() > 0.99) {
-        var randomX3 = this.canvas.width * Math.random();
-        var randomX4 = this.canvas.width * Math.random();
         
-        var newSuperfood = new Superfood(this.canvas, randomX3, 7);
-        var newSuperenemy = new Superenemy(this.canvas, randomX4, 7);
-
+        var randomX3 = (this.canvas.width - 20) * Math.random();
+        var randomX4 = (this.canvas.width - 42) * Math.random();
+        
+        var newSuperfood = new Superfood(this.canvas, randomX3, 4);
+        var newSuperenemy = new Superenemy(this.canvas, randomX4, 4);
+ 
         this.superfood.push(newSuperfood);
         this.superenemy.push(newSuperenemy);
       }
@@ -170,6 +171,7 @@ Game.prototype.checkCollisions = function() {
       // We will implement didCollide() in the next step
       if ( this.turtle.didCollide(enemy) ) {
   
+        //this.turtle.draw2();
         this.turtle.removeLife();
         console.log('lives', this.turtle.lives);
         

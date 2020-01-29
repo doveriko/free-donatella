@@ -20,8 +20,8 @@ function main() {
     splashScreen = buildDom(`
     <main>
       <h1>FREE DONATELLA</h1>
-      <p class="prueba">Help our lovely turtle to survive another day in the ocean</p>
-      <button>Start</button>
+      <h2 class="instructions">Can you help a marine turtle to survive another day in the ocean?</h2>
+      <button>START</button>
     </main>
   `);
       
@@ -46,7 +46,7 @@ function main() {
   function createGameScreen() {
     var gameScreen = buildDom(`
     <main class="game container">
-      <header>
+      <header id="scoreboard">
         <div class="lives">
           <span class="label">LIVES:</span>
           <span class="value"></span>
@@ -75,15 +75,18 @@ function main() {
   function createGameOverScreen() {
     gameOverScreen = buildDom(`
       <main>
-        <h1>Game over</h1>
+        <h2 id="gameover">game over</h2>
+        <div id="finalscore">
         <p>Your score: <span></span></p>
-        <button>Restart</button>
-        <button>Call to action</button>
-        </main>
+        </div>
+        <p id="final-sentence">Fortunately this was just a game, but you can do something in real life!</p>
+        <a href="https://www.worldwildlife.org/species/sea-turtle" target="_blank"><button class="adopt">adopt a real turtle</button></a>
+        <button class="play-again">help donatella again</button>
+      </main>
     `);
   
-    var button = gameOverScreen.querySelector('button');
-    button.addEventListener('click', startGame);
+    var playAgainButton = gameOverScreen.querySelector('button.play-again');
+    playAgainButton.addEventListener('click', startGame);
   
     var span = gameOverScreen.querySelector('span');
     span.innerText = game.getScore();

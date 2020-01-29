@@ -4,11 +4,13 @@ function Turtle(canvas, lives) {
   this.canvas = canvas;
   this.ctx = this.canvas.getContext('2d');
   this.lives = lives;
-  this.size = 100;
+  this.size = 138;
+  this.width = 138;
+  this.height = 90;
   this.x = canvas.width / 2;
-  this.y = 500;
+  this.y = 550;
   this.direction = 0;
-  this.speed = 2;
+  this.speed = 3;
 }
 
 Turtle.prototype.setDirection = function(direction) {
@@ -88,9 +90,18 @@ Turtle.prototype.handleScreenCollision = function() {
 
 Turtle.prototype.draw = function() {
     this.img = new Image(); 
+    this.img.src = "./img/turtle2.png";
+    // this.ctx.fillStyle = "green";
+    this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    // fillRect(x, y, width, height)
+    // this.ctx.fillRect(this.x, this.y, this.size, this.size);
+  };
+
+  Turtle.prototype.draw2 = function() {
+    this.img = new Image(); 
     this.img.src = "./img/turtle.png";
     // this.ctx.fillStyle = "green";
-    this.ctx.drawImage(this.img, this.x, this.y, 120, 120);
+    this.ctx.drawImage(this.img, this.x, this.y, 160, 100);
     // fillRect(x, y, width, height)
     // this.ctx.fillRect(this.x, this.y, this.size, this.size);
   };
