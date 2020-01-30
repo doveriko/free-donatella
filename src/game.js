@@ -11,8 +11,9 @@ function Game() {
   this.gameIsOver = false;
   this.gameScreen = null;
   this.score = 0;
+  this.foodSFX = new Audio ("sfx/food.wav");
+  this.rubbishSFX = new Audio ("sfx/rubbish.wav");
 }
-
 
 // Create `ctx`, a `turtle` and start the Canvas loop
 Game.prototype.start = function() {
@@ -61,29 +62,27 @@ Game.prototype.start = function() {
       // 0. turtle was created already
   
       // 1. Create rubbish randomly
-  
-      //this.score++;
       this.scoreElement.innerHTML = this.score;
       this.livesElement.innerHTML = this.turtle.lives;
   
-      if (Math.random() > 0.98) {
+      if (Math.random() > 0.980) {
         var randomX1 = (this.canvas.width - 25) * Math.random();
         var randomX2 = (this.canvas.width - 20) * Math.random();
   
-        var newEnemy = new Enemy(this.canvas, randomX1, 3);
-        var newFood = new Food(this.canvas, randomX2, 3);
+        var newEnemy = new Enemy(this.canvas, randomX1, 4);
+        var newFood = new Food(this.canvas, randomX2, 2);
 
         this.enemy.push(newEnemy);
         this.food.push(newFood);
       }
 
-      if (Math.random() > 0.99) {
+      if (Math.random() > 0.992) {
         
         var randomX3 = (this.canvas.width - 20) * Math.random();
         var randomX4 = (this.canvas.width - 42) * Math.random();
         
         var newSuperfood = new Superfood(this.canvas, randomX3, 4);
-        var newSuperenemy = new Superenemy(this.canvas, randomX4, 4);
+        var newSuperenemy = new Superenemy(this.canvas, randomX4, 6);
  
         this.superfood.push(newSuperfood);
         this.superenemy.push(newSuperenemy);
@@ -177,8 +176,13 @@ Game.prototype.checkCollisions = function() {
         
         // Move the enemy off screen to the left
         enemy.y = 0 - enemy.size;
-  
-        if (this.turtle.lives === 0) {
+        
+        if (this.turtle.lives > 0) {
+          this.rubbishSFX.currentTime = 0;
+          this.rubbishSFX.volume = 1;
+          this.rubbishSFX.play();
+        }
+        else if (this.turtle.lives === 0) {
           this.gameOver(this.score);
         }
       }
@@ -190,12 +194,16 @@ Game.prototype.checkCollisions = function() {
       if ( this.turtle.didCollide(superenemy) ) {
   
         this.turtle.removeLife();
-        console.log('lives', this.turtle.lives);
+      //console.log('lives', this.turtle.lives);
         
-        // Move the enemy off screen to the left
+        // Move the enemy off screen
         superenemy.y = 0 - superenemy.size;
   
-        if (this.turtle.lives === 0) {
+        if (this.turtle.lives > 0) {
+          this.rubbishSFX.currentTime = 0;
+          this.rubbishSFX.volume = 1;
+          this.rubbishSFX.play();
+        } else if (this.turtle.lives === 0) {
           this.gameOver(this.score);
         }
       }
@@ -208,7 +216,9 @@ Game.prototype.checkCollisions = function() {
       
       // We will implement didCollide() in the next step
       if ( this.turtle.didCollide(food) ) {
-        
+        this.foodSFX.currentTime = 0;
+        this.foodSFX.volume = 1;
+        this.foodSFX.play();
         // Move the food off screen to the left
         food.y = 0 - food.size;
         this.score += 100;
@@ -219,7 +229,9 @@ Game.prototype.checkCollisions = function() {
       
       // We will implement didCollide() in the next step
       if ( this.turtle.didCollide(superfood) ) {
-        
+        this.foodSFX.currentTime = 0;
+        this.foodSFX.volume = 1;
+        this.foodSFX.play();
         // Move the superfood off screen to the left
         superfood.y = 0 - superfood.size;
         this.score += 150;
@@ -228,12 +240,6 @@ Game.prototype.checkCollisions = function() {
 
   };
   
-
   Game.prototype.passGameOverCallback = function(gameOverFunc) {
     this.startOver = gameOverFunc;
   };
-  
-/* Not suposed to need these ones:
-Game.prototype.updateGameStats = function() {};
-Game.prototype.removeGameScreen = function() {};
-*/

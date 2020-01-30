@@ -78,9 +78,13 @@ button {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
+button:hover {
+  transform: scale(1.5);
+}
+
 /* ---GAME SCREEN---- */
 
-.container {
+.game-container {
   max-width: 72%;
   max-height: 92%;
   margin: 0 auto;
@@ -139,4 +143,11 @@ h2 {
 
    .play-again {
     width: 250px;
+    background-color: #90348a;
+    color: #f6b343;
+    border: 2px solid #f6b343;;
+  }
+
+  .adopt:hover, .play-again:hover {
+    transform: scale(1.5);
   }

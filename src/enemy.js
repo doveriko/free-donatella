@@ -8,6 +8,7 @@ function Enemy (canvas, x, speed) {
   this.x = x; // random width position
   this.y = 0 + this.size;
   this.speed = speed;
+  this.type = "bad";
 };
 
 Enemy.prototype.draw = function() {

@@ -8,6 +8,7 @@ function Superfood (canvas, x, speed) {
   this.x = x; // random width position
   this.y = 0 + this.size;
   this.speed = speed;
+  this.type = "good";
 }
 Superfood.prototype.draw = function() {
     this.img = new Image(); 

@@ -8,6 +8,7 @@ function Food (canvas, x, speed) {
   this.x = x; // random width position
   this.y = 0 + this.size;
   this.speed = speed;
+  this.type = "good";
 }
 Food.prototype.draw = function() {
   this.img = new Image(); 

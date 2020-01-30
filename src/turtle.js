@@ -4,13 +4,14 @@ function Turtle(canvas, lives) {
   this.canvas = canvas;
   this.ctx = this.canvas.getContext('2d');
   this.lives = lives;
-  this.size = 138;
-  this.width = 138;
-  this.height = 90;
+  this.size = 150;
+  this.width = 150;
+  this.height = 150;
   this.x = canvas.width / 2;
-  this.y = 550;
+  this.y = canvas.height - 140;
   this.direction = 0;
   this.speed = 3;
+  this.collision = false;
 }
 
 Turtle.prototype.setDirection = function(direction) {
@@ -41,11 +42,23 @@ Turtle.prototype.setDirection = function(direction) {
     var crossTop = enemyTop <= playerBottom && enemyTop >= playerTop;
   
     if ((crossLeft || crossRight) && (crossTop || crossBottom)) {
+      
+      this.collision = enemy.type;
+
+      setTimeout(
+        function() {
+          // this.collisionType = enemy.type
+          this.collision = false;
+        }.bind(this),
+        400
+      );
+
       return true;
     }
-    return false;
+      return false;
   };
 
+  /* REDUNDANCY???????
   Turtle.prototype.didCollide = function(food) {
     var playerLeft = this.x;
     var playerRight = this.x + this.size;
@@ -59,11 +72,8 @@ Turtle.prototype.setDirection = function(direction) {
   
     // Check if the food intersects any of the player's sides
     var crossLeft = foodLeft <= playerRight && foodLeft >= playerLeft;
-      
     var crossRight = foodRight >= playerLeft && foodRight <= playerRight;
-    
     var crossBottom = foodBottom >= playerTop && foodBottom <= playerBottom;
-    
     var crossTop = foodTop <= playerBottom && foodTop >= playerTop;
   
     if ((crossLeft || crossRight) && (crossTop || crossBottom)) {
@@ -72,11 +82,12 @@ Turtle.prototype.setDirection = function(direction) {
     return false;
   };
 
+  */
+
 Turtle.prototype.handleScreenCollision = function() {
     //this.updatePosition();
     this.x = this.x + this.direction * this.speed;
 
-  
     var screenLeft = 0;
     var screenRight = this.canvas.width;
   
@@ -89,19 +100,33 @@ Turtle.prototype.handleScreenCollision = function() {
 };
 
 Turtle.prototype.draw = function() {
-    this.img = new Image(); 
-    this.img.src = "./img/turtle2.png";
+    this.img = new Image();
+    this.img.src = "./img/turtle.png";
+    
+    this.turtleRight = "./img/turtleright.png";
+    this.turtleLeft = "./img/turtleleft.png";
+    this.turtlerRubbishRight = "./img/turtlerubbishright.png";
+    this.turtleRubbishLeft = "./img/turtlerubbishleft.png";
+    this.turtleFoodRight = "./img/turtlefoodright.png";
+    this.turtleFoodLeft = "./img/turtlefoodleft.png";
+
+    if (this.collision === "bad" && this.direction === 1) {
+      this.img.src = this.turtlerRubbishRight;
+    } else if (this.collision === "bad" && this.direction === -1) {
+      this.img.src = this.turtleRubbishLeft;
+    } else if (this.collision === "good" && this.direction === 1) {
+      this.img.src = this.turtleFoodRight;
+    } else if (this.collision === "good" && this.direction === -1) {
+      this.img.src = this.turtleFoodLeft; 
+    } else if (this.direction === -1 && this.collision === false) {
+        this.img.src = this.turtleLeft;
+      } else if (this.direction === 1 && this.collision === false) {
+        this.img.src = this.turtleRight;
+      }
+    
+    
     // this.ctx.fillStyle = "green";
     this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    // fillRect(x, y, width, height)
-    // this.ctx.fillRect(this.x, this.y, this.size, this.size);
-  };
-
-  Turtle.prototype.draw2 = function() {
-    this.img = new Image(); 
-    this.img.src = "./img/turtle.png";
-    // this.ctx.fillStyle = "green";
-    this.ctx.drawImage(this.img, this.x, this.y, 160, 100);
     // fillRect(x, y, width, height)
     // this.ctx.fillRect(this.x, this.y, this.size, this.size);
   };
