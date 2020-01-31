@@ -31,7 +31,7 @@ html, body {
 /* ---SPLASH SCREEN---- */
 
 body {
-  background-image: url("./img/fondoguay.jpg");
+  background-image: url("./img/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -137,17 +137,15 @@ h2 {
   margin: 0px;
 }
 
-   .adopt {
-    width: 250px;
-  }
-
-   .play-again {
-    width: 250px;
-    background-color: #90348a;
-    color: #f6b343;
-    border: 2px solid #f6b343;;
-  }
-
-  .adopt:hover, .play-again:hover {
-    transform: scale(1.5);
-  }
+.adopt {
+  width: 250px;
+}
+ .play-again {
+  width: 250px;
+  background-color: #90348a;
+  color: #f6b343;
+  border: 2px solid #f6b343;;
+}
+.adopt:hover, .play-again:hover {
+  transform: scale(1.5);
+}
