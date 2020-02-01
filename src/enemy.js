@@ -14,7 +14,6 @@ function Enemy (canvas, x, speed) {
 Enemy.prototype.draw = function() {
   this.img = new Image(); 
   this.img.src = "./img/bottle.png";
-  // fillRect(x, y, width, height)
   this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 };
 

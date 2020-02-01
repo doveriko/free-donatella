@@ -14,7 +14,6 @@ function Superenemy (canvas, x, speed) {
 Superenemy.prototype.draw = function() {
     this.img = new Image(); 
     this.img.src = "./img/toxic.png";
-    // fillRect(x, y, width, height)
     this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
 };
 

@@ -7,13 +7,11 @@ function buildDom(htmlString) {
     return div.children[0];
   };
 
-// Runs on initial start and contains calls all other functions that manage the game
+// Runs on initial start and contains calls to all other functions that manage the game
 function main() {
-  var game; // instance of the Game
-  var splashScreen; // Start Screen
+  var game;
+  var splashScreen;
   var gameOverScreen;
-    
-  // -- splash screen
 
   function createSplashScreen() {
 
@@ -30,18 +28,15 @@ function main() {
     var startButton = splashScreen.querySelector('button');
     startButton.addEventListener('click', function() {
         startGame();
-        console.log('You clicked Start!'); // PROVISIONAL
-        
-      // Here we start the game 
+        // Test -> console.log('You clicked Start!');
     });
   };
 
+
   function removeSplashScreen() {
-    splashScreen.remove(); // remove() is an HTML method that removes the element entirely
+    splashScreen.remove();
   }
 
-    
-  // -- game screen
 
   function createGameScreen() {
     var gameScreen = buildDom(`
@@ -66,11 +61,11 @@ function main() {
     return gameScreen;
   }
 
+
   function removeGameScreen() {
-    game.gameScreen.remove(); // We will implement it in the game object
+    game.gameScreen.remove();
   }
-    
-  // -- game over screen
+
 
   function createGameOverScreen() {
     gameOverScreen = buildDom(`
@@ -84,8 +79,6 @@ function main() {
         <button class="play-again">play again</button>
       </main>
     `);
-
-  
   
     var playAgainButton = gameOverScreen.querySelector('button.play-again');
     playAgainButton.addEventListener('click', startGame);
@@ -96,16 +89,16 @@ function main() {
     document.body.appendChild(gameOverScreen);
   }
 
+
   function removeGameOverScreen() {
-    if (gameOverScreen !== undefined) { // if it exists saved in a variable
+    if (gameOverScreen !== undefined) {
       gameOverScreen.remove();
     }
   }
 
     
-  // -- Setting the game state 
+  // Setting the game state 
 
-  // SETTING GAME STATE
   function startGame() {
     removeSplashScreen();
     removeGameOverScreen();
@@ -118,23 +111,16 @@ function main() {
 
     // End the game
     game.passGameOverCallback(gameOver);
-    /* Alternative:
-    game.passGameOverCallback( function() {	
-    gameOver(game.score);
-    */
   }
 
-  function gameOver() { // score as an argument?
+  function gameOver() {
     removeGameScreen();
-    createGameOverScreen(); // <--(score) ??
-
-    console.log("GAME OVER IN MAIN");
+    createGameOverScreen();
+    // Test -> console.log("GAME OVER IN MAIN");
   }
 
-    
-  // -- initialize Splash screen on initial start
   createSplashScreen();
 }
 
-// Runs the function `main` once all resources are loaded
+// Runs the function 'main' once all resources are loaded
 window.addEventListener('load', main);
