@@ -86,7 +86,7 @@ button:hover {
 
 .game-container {
   max-width: 72%;
-  max-height: 92%;
+  max-height: 89%;
   margin: 0 auto;
 }
 
@@ -99,6 +99,7 @@ button:hover {
 
 #scoreboard {
   padding-top: 12px;
+  padding-bottom: 10px;
   width: 500px;
   display: flex;
   align-content: space-between;
