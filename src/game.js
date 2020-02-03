@@ -1,6 +1,7 @@
 'use strict';
 
-function Game() {
+class Game {
+  constructor() {
   this.canvas = null;
   this.ctx = null;
   this.enemy = [];
@@ -13,9 +14,9 @@ function Game() {
   this.score = 0;
   this.foodSFX = new Audio ("sfx/food.wav");
   this.rubbishSFX = new Audio ("sfx/rubbish.wav");
-}
+  }
 
-Game.prototype.start = function() {
+  start() {
     // Test -> console.log('Game start');
     // Save references to canvas and container. Create ctx
     this.canvasContainer = document.querySelector('.canvas-container');
@@ -35,24 +36,25 @@ Game.prototype.start = function() {
     // Create a new turtle for the current game
     this.turtle = new Turtle(this.canvas, 3); // 3 = Number of lives ("warnings")
   
-    // Add keydown event listeners to create the movements of the turtle
-    this.handleKeyDown = function(event) {
-    if (event.key === "ArrowRight") {
-      this.turtle.setDirection("right");
-    } else if (event.key === "ArrowLeft") {
-      this.turtle.setDirection("left");
-    }
-    };
-
-    // Add event listener to move the turtle
-    window.addEventListener("keydown", this.handleKeyDown.bind(this));
+      // Add keydown event listeners
+      this.handleKeyDown = (event) => {
+        if (event.key === "ArrowRight") {
+          this.turtle.setDirection("right");
+        } else if (event.key === "ArrowLeft") {
+          this.turtle.setDirection("left");
+        }
+      };
+          
+        // Add event listener for moving the turtle
+        window.addEventListener("keydown", this.handleKeyDown);
+        // document.body.addEventListener
       
     this.startLoop();
   };
 
-Game.prototype.startLoop = function() {
+  startLoop() {
 
-  var loop = function() {
+  var loop = () => {
     // Push and update number of lives ("warnings") and points to the scoreboard
     this.scoreElement.innerHTML = this.score;
     this.livesElement.innerHTML = this.turtle.lives;
@@ -87,22 +89,22 @@ Game.prototype.startLoop = function() {
     this.turtle.handleScreenCollision();
 
     // Update the position of each element and check that they remain inside the screen
-    this.enemy = this.enemy.filter(function(enemy) {
+    this.enemy = this.enemy.filter( (enemy) => {
       enemy.updatePosition();
       return enemy.isInsideScreen();
     });
 
-    this.food = this.food.filter(function(food) {
+    this.food = this.food.filter( (food) => {
       food.updatePosition();
       return food.isInsideScreen();
     });
 
-    this.superfood = this.superfood.filter(function(superfood) {
+    this.superfood = this.superfood.filter( (superfood) => {
       superfood.updatePosition();
       return superfood.isInsideScreen();
     });
 
-    this.superenemy = this.superenemy.filter(function(superenemy) {
+    this.superenemy = this.superenemy.filter( (superenemy) => {
       superenemy.updatePosition();
       return superenemy.isInsideScreen();
     });
@@ -114,47 +116,39 @@ Game.prototype.startLoop = function() {
     this.turtle.draw();
 
     // Draw enemies and food
-    this.enemy.forEach(function(enemy) {
-      enemy.draw();
-    });
+    this.enemy.forEach( (enemy) => enemy.draw() )
 
-    this.food.forEach(function(food) {
-      food.draw();
-    });
+    this.food.forEach( (food) => food.draw() )
 
-    this.superfood.forEach(function(superfood) {
-      superfood.draw();
-    });
+    this.superfood.forEach( (superfood) => superfood.draw() )
 
-    this.superenemy.forEach(function(superenemy) {
-      superenemy.draw();
-    });
+    this.superenemy.forEach( (superenemy) => superenemy.draw() )
 
     // Terminate the loop if the game is over
     if (!this.gameIsOver) {
       requestAnimationFrame(loop);
       }
-  }.bind(this);
+  };
 
   loop();
-};
+  };
 
-// To get the score updated
-Game.prototype.getScore = function() {
+  // To get the score updated
+  getScore() {
     return this.score;
   }
 
-// Callback functions to re-start the game
-Game.prototype.gameOver = function() {
-  this.gameIsOver = true;
-  // Test -> console.log('GAME OVER');
-  this.startOver(); 
-};
+  // Callback functions to re-start the game
+  gameOver() {
+    this.gameIsOver = true;
+    // Test -> console.log('GAME OVER');
+    this.startOver(); 
+  };
 
 
-Game.prototype.checkCollisions = function() {
+checkCollisions() {
   
-    this.enemy.forEach( function(enemy) {
+    this.enemy.forEach( (enemy) => {
       
       if (this.turtle.didCollide(enemy) ) {
   
@@ -177,7 +171,7 @@ Game.prototype.checkCollisions = function() {
     }, this);
 
 
-    this.superenemy.forEach( function(superenemy) {
+    this.superenemy.forEach( (superenemy) => {
       
       if (this.turtle.didCollide(superenemy) ) {
   
@@ -199,7 +193,7 @@ Game.prototype.checkCollisions = function() {
     }, this);
 
 
-    this.food.forEach( function(food) {
+    this.food.forEach( (food) => {
       
       if (this.turtle.didCollide(food) ) {
 
@@ -215,7 +209,7 @@ Game.prototype.checkCollisions = function() {
       }
     }, this);
 
-    this.superfood.forEach( function(superfood) {
+    this.superfood.forEach( (superfood) => {
       
       if (this.turtle.didCollide(superfood) ) {
 
@@ -228,9 +222,11 @@ Game.prototype.checkCollisions = function() {
         this.score += 150;
       }
     }, this);
-};
+  };
   
 
-Game.prototype.passGameOverCallback = function(gameOverFunc) {
-    this.startOver = gameOverFunc;
-};
+  passGameOverCallback(gameOverFunc) {
+      this.startOver = gameOverFunc;
+  };
+
+}

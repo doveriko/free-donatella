@@ -1,5 +1,6 @@
 'use strict';
-function Superenemy (canvas, x, speed) {
+class Superenemy {
+  constructor (canvas, x, speed) {
   this.canvas = canvas;
   this.ctx = canvas.getContext('2d');
   this.size = 42;
@@ -9,18 +10,20 @@ function Superenemy (canvas, x, speed) {
   this.y = 0 + this.size;
   this.speed = speed;
   this.type = "bad";
-};
+}
 
-Superenemy.prototype.draw = function() {
+draw() {
     this.img = new Image(); 
     this.img.src = "./img/toxic.png";
     this.ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-};
+}
 
-Superenemy.prototype.updatePosition = function() {
+updatePosition() {
   this.y = this.y + this.speed;
-};
+}
 
-Superenemy.prototype.isInsideScreen = function() {
+isInsideScreen() {
   return this.y + this.size / 2 > 0;  
-};
+}
+
+}
