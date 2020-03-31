@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
 // Creates DOM elements from a string representation
 function buildDom(htmlString) {
-    var div = document.createElement('div');
-    div.innerHTML = htmlString;
-    return div.children[0];
-  };
+  var div = document.createElement("div");
+  div.innerHTML = htmlString;
+  return div.children[0];
+}
 
 // Runs on initial start and contains calls to all other functions that manage the game
 function main() {
@@ -14,7 +14,6 @@ function main() {
   var gameOverScreen;
 
   function createSplashScreen() {
-
     splashScreen = buildDom(`
     <main>
       <h1>FREE DONATELLA</h1>
@@ -22,21 +21,19 @@ function main() {
       <button>START</button>
     </main>
   `);
-      
+
     document.body.appendChild(splashScreen);
 
-    var startButton = splashScreen.querySelector('button');
-    startButton.addEventListener('click', function() {
-        startGame();
-        // Test -> console.log('You clicked Start!');
+    var startButton = splashScreen.querySelector("button");
+    startButton.addEventListener("click", function() {
+      startGame();
+      // Test -> console.log('You clicked Start!');
     });
-  };
-
+  }
 
   function removeSplashScreen() {
     splashScreen.remove();
   }
-
 
   function createGameScreen() {
     var gameScreen = buildDom(`
@@ -61,11 +58,9 @@ function main() {
     return gameScreen;
   }
 
-
   function removeGameScreen() {
     game.gameScreen.remove();
   }
-
 
   function createGameOverScreen() {
     gameOverScreen = buildDom(`
@@ -79,16 +74,15 @@ function main() {
         <button class="play-again">play again</button>
       </main>
     `);
-  
-    var playAgainButton = gameOverScreen.querySelector('button.play-again');
-    playAgainButton.addEventListener('click', startGame);
-  
-    var span = gameOverScreen.querySelector('span');
+
+    var playAgainButton = gameOverScreen.querySelector("button.play-again");
+    playAgainButton.addEventListener("click", startGame);
+
+    var span = gameOverScreen.querySelector("span");
     span.innerText = game.getScore();
-  
+
     document.body.appendChild(gameOverScreen);
   }
-
 
   function removeGameOverScreen() {
     if (gameOverScreen !== undefined) {
@@ -96,9 +90,7 @@ function main() {
     }
   }
 
-    
-  // Setting the game state 
-
+  // Setting the game state
   function startGame() {
     removeSplashScreen();
     removeGameOverScreen();
@@ -123,4 +115,4 @@ function main() {
 }
 
 // Runs the function 'main' once all resources are loaded
-window.addEventListener('load', main);
+window.addEventListener("load", main);
