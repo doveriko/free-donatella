@@ -1,7 +1,9 @@
 # Free Donatella
 
 ## Description
-This is a game to raise awareness about the threat that pollution represents for the planet. Donatella is a turtle that tries to survive in the ocean, surrounded by an increasing amount of rubbish that will put her life in danger. This is my first project of Ironhack Barcelona web development bootcamp (January 2020).
+<video src="/Users/Abel/Desktop/Ironhack/W3/Project1/donatella.mov"></video>
+
+This is a game to raise awareness about the threat that pollution represents for the planet. Donatella is a turtle that tries to survive in the ocean, surrounded by an increasing amount of rubbish that will put her life in danger.  The game combines ES6, DOM manipulation, canvas and OOP.
 
 
 ## MVP (DOM - CANVAS)
@@ -28,9 +30,8 @@ This is a game to raise awareness about the threat that pollution represents for
 <body>
   <script src="./src/main.js"></script>
   <script src="./src/game.js"></script>
-  <script src="./src/rubbish.js"></script>
-  <script src="./src/rubbish.js"></script>
-  <script src="./src/food.js"></script>
+  <script src="./src/turtle.js"></script>
+  <script src="./src/elements.js"></script>
 </body>
 </html>
 ```
@@ -53,7 +54,7 @@ Typography, layout, components.
 
 ### game.js
 
-#### function Game():
+#### Constructor:
 - this.canvas: Will call the canvas
 - this.ctx: Will set the canvas as "2d" (2 dimensions)
 - this.rubbish -> Empty array that will "push" random rubbish into the canvas. Various images will be used and all of them substract 1 life from the player (turtle).
@@ -62,55 +63,46 @@ Typography, layout, components.
 - this.gameScreen: Will check the screen to display.
 - this.score: Starts with 0 and only increases when the player (turtle) collapses with a food element.
 
-#### Game.prototype.(...):
-- start: Initialize the game and canvas, generate a new player and add keydown event listeners
-- startLoop: Update the score, generate random enemies (rubbish) and random food, check collisions between the turtle and enemies & food, check collisions of turtle with the frame of the screen and check if enemies (rubbish) and food are out of the screen (to remove them from the array), draw the elements (turtle, rubbish and food), terminate the loop if the game is over.
-- gameOver: Check if game is over and starts again.
-- checkCollisions: Activa la función 'gameOver' cuando la vidas llegan a 0.
-- passGameOverCallback: Callback function to restart the game from startGame() in main.js.
+#### Methods:
+- **start()**: Initialize the game and canvas, generate a new player and add keydown event listeners
+- **startLoop()**: Update the score, generate random enemies (rubbish) and random food, check collisions between the turtle and enemies & food, check collisions of turtle with the frame of the screen and check if enemies (rubbish) and food are out of the screen (to remove them from the array), draw the elements (turtle, rubbish and food), terminate the loop if the game is over.
+- **gameOver()**: Check if game is over and starts again.
+- **checkCollisions()**: Activa la función 'gameOver' cuando la vidas llegan a 0.
+- **passGameOverCallback()**: Callback function to restart the game from startGame() in main.js.
 
 ### turtle.js
-- function Turtle: canvas, ctx, size, x, y, direction, speed
-- Turtle.prototype.setDirection: Only left and right
-- Player.prototype.didCollide: With rubbish & and food
-- Turtle.prototype.updatePosition
-- Turtle.prototype.handleScreenCollision
-- Turtle.prototype.removeLife
-- Turtle.prototype.draw
+- Constructor: **Turtle**: canvas, ctx, size, x, y, direction, speed
+- Method: **setDirection():** Left and right
+- Method: **didCollide():** Check collision with all elements
+- Method: **updatePosition():** Track movement
+- Method: **handleScreenCollision():** Remain in the limits of the canvas
+- Method: **removeLife():** Every interaction with any type of rubbish subtracts one live from turtle
+- Method: **draw()** a new turtle
 
-### food.js
-- function Food: canvas, ctx, size, x, y, speed
-- Food.prototype.draw:
-- Food.prototype.updatePosition
-- Food.prototype.isInsideScreen
+### elements.js
+- Constructor: **Elements**: canvas, ctx (canvas.getContext("2d")), x (initial random position), speed
 
-### rubbish.js
-- function Rubbish: canvas, ctx, size, x, y, speed
-- Rubbish.prototype.draw
-- Rubbish.prototype.updatePosition
-- Rubbish.prototype.isInsideScreen
+- Method: **updatePosition()**
 
-## States y States Transitions
+- Method: **isInsideScreen()**
+
+  ##### Extension of prototype: 
+
+- **Food**: Constructor: size, width, height, y (position), type ("good") | Method: draw()
+- **Superfood:** Constructor: size, width, height, y (position), type ("good") | Method: draw()
+
+- **Enemy:** Constructor: size, width, height, y (position), type ("bad") | Method: draw()
+
+- **Superenemy:** Constructor: size, width, height, y (position), type ("bad") | Method: draw()
+
+## States
 - splashScreen: Title, mission, movement instructions and start button.
 - gameScreen: Scoreboard with number of lives and points, enemies (rubbish) amount increases until it is impossible for the turtle to avoid collision and looses the 3 lives.
 - gameoverScreen: Shows a message with environmental awareness content and 2 buttons: one to play again (back to splashScreen) and another button with a "call to action" that includes a link to some website about the topic (e.g. https://www.worldwildlife.org/species/sea-turtle)
 
-## Tasks
-- Create proyect and HTML, CSS and JS files and link them.
-- Inspect the HTML elements and style them in CSS.
-- Create loop in JS to iteration between screens (splash, game and game over).
-- Shape the properties of turtle, rubbish and food.
-- Implement the structure of main.js and game.js.
-
 ## Links
 
-### Trello
-[Link url](https://trello.com/b/XiuTiErU)
-
 ### Git
-[Link Repo](https://github.com/doveriko/free-donatella)
-(Deploy)
+[Repo](https://github.com/doveriko/free-donatella)
 
-
-### Slides
-(Slides)
+[Deployment](https://doveriko.github.io/free-donatella/) 
