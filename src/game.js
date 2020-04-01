@@ -4,11 +4,11 @@ class Game {
   constructor() {
     this.canvas = null;
     this.ctx = null;
-    this.enemy = [];
-    this.superenemy = [];
-    this.food = [];
-    this.superfood = [];
-    this.elements = []
+    // this.enemy = [];
+    // this.superenemy = [];
+    // this.food = [];
+    // this.superfood = [];
+    this.elements = [];
     this.turtle = null;
     this.gameIsOver = false;
     this.gameScreen = null;
@@ -66,12 +66,10 @@ class Game {
         var newEnemy = new Enemy(this.canvas, randomX1, 4);
         var newFood = new Food(this.canvas, randomX2, 2);
 
-        this.enemy.push(newEnemy);
-        this.food.push(newFood);
+        // this.enemy.push(newEnemy);
+        // this.food.push(newFood);
 
-        this.elements.push(newEnemy, newFood)
-        
-        console.log("Aquí va", this.elements)
+        this.elements.push(newEnemy, newFood);
       }
 
       // Generate jelly fishes and toxic barrels
@@ -82,12 +80,10 @@ class Game {
         var newSuperfood = new Superfood(this.canvas, randomX3, 4);
         var newSuperenemy = new Superenemy(this.canvas, randomX4, 6);
 
-        this.superfood.push(newSuperfood);
-        this.superenemy.push(newSuperenemy);
+        // this.superfood.push(newSuperfood);
+        // this.superenemy.push(newSuperenemy);
 
         this.elements.push(newSuperfood, newSuperenemy);
-
-        console.log("Aquí va 2", this.elements)
       }
 
       // Check collisions between the turtle and the elements
@@ -97,25 +93,9 @@ class Game {
       this.turtle.handleScreenCollision();
 
       // Update the position of each element and check that they remain inside the screen
-
-      this.enemy = this.enemy.filter(enemy => {
-        enemy.updatePosition();
-        return enemy.isInsideScreen();
-      });
-
-      this.food = this.food.filter(food => {
-        food.updatePosition();
-        return food.isInsideScreen();
-      });
-
-      this.superfood = this.superfood.filter(superfood => {
-        superfood.updatePosition();
-        return superfood.isInsideScreen();
-      });
-
-      this.superenemy = this.superenemy.filter(superenemy => {
-        superenemy.updatePosition();
-        return superenemy.isInsideScreen();
+      this.elements = this.elements.filter(element => {
+        element.updatePosition();
+        return element.isInsideScreen();
       });
 
       // Clear the canvas
@@ -125,13 +105,7 @@ class Game {
       this.turtle.draw();
 
       // Draw enemies and food
-      this.enemy.forEach(enemy => enemy.draw());
-
-      this.food.forEach(food => food.draw());
-
-      this.superfood.forEach(superfood => superfood.draw());
-
-      this.superenemy.forEach(superenemy => superenemy.draw());
+      this.elements.forEach(element => element.draw());
 
       // Terminate the loop if the game is over
       if (!this.gameIsOver) {
@@ -155,72 +129,156 @@ class Game {
   }
 
   checkCollisions() {
-    this.enemy.forEach(enemy => {
-      if (this.turtle.didCollide(enemy)) {
-        // Sound effect when the turtle collides with rubbish
-        if (this.turtle.lives > 0) {
-          this.rubbishSFX.currentTime = 0;
-          this.rubbishSFX.volume = 1;
-          this.rubbishSFX.play();
-        } else if (this.turtle.lives === 0) {
-          this.gameOver(this.score);
-        }
 
-        this.turtle.removeLife();
-        // Test -> console.log('lives', this.turtle.lives);
+    for (let i = 0; i < this.elements.length; i++) {
 
-        // Move the enemy off screen
-        enemy.y = 0 - enemy.size;
+      switch(this.elements[i].__proto__.constructor.name) {
+
+        case "Superfood":
+        case "Food":
+
+            if (this.turtle.didCollide(this.elements[i])) {
+              // Sound effect when the turtle collides with superfood
+              this.foodSFX.currentTime = 0;
+              this.foodSFX.volume = 1;
+              this.foodSFX.play();
+  
+              // Move the superfood off screen
+              this.elements[i].y = 0 - this.elements[i].size;
+  
+              this.score += 150;
+            }
+
+        break;
+
+        case "Enemy":
+        case "Superenemy":
+
+          if (this.turtle.didCollide(this.elements[i])) {
+            // Sound effect when the turtle collides with rubbish
+            if (this.turtle.lives > 0) {
+              this.rubbishSFX.currentTime = 0;
+              this.rubbishSFX.volume = 1;
+              this.rubbishSFX.play();
+            } else if (this.turtle.lives === 0) {
+              this.gameOver(this.score);
+            }
+            
+            this.turtle.removeLife();
+            // Test -> console.log('lives', this.turtle.lives);
+            
+            // Move the enemy off screen
+            this.elements[i].y = 0 - this.elements[i].size;
+          }
+
+        break;
+
+        default:
+          console.log("GOOD TRY")
       }
-    }, this);
-
-    this.superenemy.forEach(superenemy => {
-      if (this.turtle.didCollide(superenemy)) {
-        // Sound effect when the turtle collides with rubbish
-        if (this.turtle.lives > 0) {
-          this.rubbishSFX.currentTime = 0;
-          this.rubbishSFX.volume = 1;
-          this.rubbishSFX.play();
-        } else if (this.turtle.lives === 0) {
-          this.gameOver(this.score);
-        }
-
-        this.turtle.removeLife();
-        // Test -> console.log('lives', this.turtle.lives);
-
-        // Move the enemy off screen
-        superenemy.y = 0 - superenemy.size;
-      }
-    }, this);
-
-    this.food.forEach(food => {
-      if (this.turtle.didCollide(food)) {
-        // Sound effect when the turtle collides with food
-        this.foodSFX.currentTime = 0;
-        this.foodSFX.volume = 1;
-        this.foodSFX.play();
-
-        // Move the food off screen
-        food.y = 0 - food.size;
-
-        this.score += 100;
-      }
-    }, this);
-
-    this.superfood.forEach(superfood => {
-      if (this.turtle.didCollide(superfood)) {
-        // Sound effect when the turtle collides with superfood
-        this.foodSFX.currentTime = 0;
-        this.foodSFX.volume = 1;
-        this.foodSFX.play();
-
-        // Move the superfood off screen
-        superfood.y = 0 - superfood.size;
-
-        this.score += 150;
-      }
-    }, this);
+    }
   }
+
+    //     this.elements.forEach(superfood => {
+    //       if (this.turtle.didCollide(superfood)) {
+    //         // Sound effect when the turtle collides with superfood
+    //         this.foodSFX.currentTime = 0;
+    //         this.foodSFX.volume = 1;
+    //         this.foodSFX.play();
+
+    //         // Move the superfood off screen
+    //         superfood.y = 0 - superfood.size;
+
+    //         this.score += 150;
+    //       }
+    //     }, this);
+        
+    //   } else if (this.elements[i].__proto__.constructor.name === "Food") {
+        
+    //     this.elements.forEach(food => {
+    //       if (this.turtle.didCollide(food)) {
+    //         // Sound effect when the turtle collides with food
+    //         this.foodSFX.currentTime = 0;
+    //         this.foodSFX.volume = 1;
+    //         this.foodSFX.play();
+            
+    //         // Move the food off screen
+    //         food.y = 0 - food.size;
+            
+    //         this.score += 100;
+    //       }
+    //     }, this);
+        
+    //   } else if (this.elements[i].__proto__.constructor.name === "Enemy" || "Superenemy") {
+        
+    //     this.elements.forEach(enemy => {
+    //       if (this.turtle.didCollide(enemy)) {
+    //         // Sound effect when the turtle collides with rubbish
+    //         if (this.turtle.lives > 0) {
+    //           this.rubbishSFX.currentTime = 0;
+    //           this.rubbishSFX.volume = 1;
+    //           this.rubbishSFX.play();
+    //         } else if (this.turtle.lives === 0) {
+    //           this.gameOver(this.score);
+    //         }
+            
+    //         this.turtle.removeLife();
+    //         // Test -> console.log('lives', this.turtle.lives);
+            
+    //         // Move the enemy off screen
+    //         enemy.y = 0 - enemy.size;
+    //       }
+    //     }, this);
+    //   }
+    // }
+    
+    // this.superenemy.forEach(superenemy => {
+    //   if (this.turtle.didCollide(superenemy)) {
+    //     // Sound effect when the turtle collides with rubbish
+    //     if (this.turtle.lives > 0) {
+    //       this.rubbishSFX.currentTime = 0;
+    //       this.rubbishSFX.volume = 1;
+    //       this.rubbishSFX.play();
+    //     } else if (this.turtle.lives === 0) {
+    //       this.gameOver(this.score);
+    //     }
+
+    //     this.turtle.removeLife();
+    //     // Test -> console.log('lives', this.turtle.lives);
+
+    //     // Move the enemy off screen
+    //     superenemy.y = 0 - superenemy.size;
+    //   }
+    // }, this);
+
+    // this.food.forEach(food => {
+    //   if (this.turtle.didCollide(food)) {
+    //     // Sound effect when the turtle collides with food
+    //     this.foodSFX.currentTime = 0;
+    //     this.foodSFX.volume = 1;
+    //     this.foodSFX.play();
+
+    //     // Move the food off screen
+    //     food.y = 0 - food.size;
+
+    //     this.score += 100;
+    //   }
+    // }, this);
+
+    // this.superfood.forEach(superfood => {
+    //   if (this.turtle.didCollide(superfood)) {
+    //     // Sound effect when the turtle collides with superfood
+    //     this.foodSFX.currentTime = 0;
+    //     this.foodSFX.volume = 1;
+    //     this.foodSFX.play();
+
+    //     // Move the superfood off screen
+    //     superfood.y = 0 - superfood.size;
+
+    //     this.score += 150;
+    //   }
+    // }, this);
+  // }
 
   passGameOverCallback(gameOverFunc) {
     this.startOver = gameOverFunc;
